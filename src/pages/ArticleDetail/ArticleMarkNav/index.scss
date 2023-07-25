@@ -1,0 +1,108 @@
+.article-detail .ant-dropdown {
+    position: fixed;
+    width: min(400px, 70%);
+    max-height: 70%;
+    background-color: #ffffff;
+    text-align: left;
+    display: flex;
+
+    &.ant-dropdown-hidden {
+        display: none;
+    }
+
+    .article-mark-nav {
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+        width: 100%;
+    }
+
+    .mark-nav-title {
+        position: relative;
+        padding-left: 1em;
+        font-size: var(--Font-Size-Title-Small);
+        margin-bottom: 20px;
+
+        &::before {
+            content: "";
+            display: block;
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            border-radius: 1em;
+            width: 6px;
+            height: 80%;
+            background-color: rgba($color: var(--Color-Theme-RGB), $alpha: 0.75);
+        }
+    }
+
+    .mark-nav-wrapper {
+        overflow: auto;
+    }
+
+    .mark-nav {
+        $border-left-pre: 5px solid;
+
+        .title-anchor.active {
+            $bg-color: rgb(142, 212, 149, .25);
+            $color: #219e40;
+            color: $color;
+            border-left: $border-left-pre rgba($color, .75);
+            background-color: $bg-color;
+
+            &:hover {
+                background-color: $bg-color;
+            }
+        }
+
+        .title-anchor {
+            box-sizing: border-box;
+            padding-right: 0 !important;
+            display: -webkit-box !important;
+            margin: 0;
+            overflow: hidden;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            font-size: var(--Font-Size-Content-Medium);
+            color: #000;
+            font-weight: 500;
+            border-left: $border-left-pre rgba(#aaa, .75);
+            line-height: 2;
+
+            &:hover {
+                background-color: unset;
+            }
+
+            small {
+                color: #aaa;
+            }
+        }
+
+        $padding-left-rate:.25em;
+
+        .title-level1 {
+            padding-left: $padding-left-rate*1 !important;
+        }
+
+        .title-level2 {
+            padding-left: $padding-left-rate*2 !important;
+        }
+
+        .title-level3 {
+            padding-left: $padding-left-rate*3 !important;
+        }
+
+        .title-level4 {
+            padding-left: $padding-left-rate*4 !important;
+        }
+
+        .title-level5 {
+            padding-left: $padding-left-rate*5 !important;
+        }
+
+        .title-level6 {
+            padding-left: $padding-left-rate*6 !important;
+        }
+    }
+}

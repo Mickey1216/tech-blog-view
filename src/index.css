@@ -1,0 +1,87 @@
+/* 去除浏览器的默认样式以及做一些公共样式 */
+body {
+  font-family: var(--Font-Family-Global);
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+@font-face {
+  font-family: 'Crystal';
+  src: url('https://npm.elemecdn.com/ethan4116-blog/lib/font/ZhuZiAWan.ttf');
+  font-display: swap;
+}
+
+div,
+span,
+a,
+li,
+code,
+input {
+  font-family: var(--Font-Family-Global);
+}
+
+#bg {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('https://c-ssl.duitang.com/uploads/item/202007/06/20200706194522_ddwkx.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  z-index: -1;
+  background-position: right top;
+}
+
+#bg::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--Color-Mask);
+}
+
+.global-style {
+  --Color-Mask: rgba(255, 255, 255, 0.94);
+  --Color-Theme: rgb(var(--Color-Theme-RGB));
+  --Color-Theme-RGB: 245, 143, 152;
+  --Color-Crystal: rgb(var(--Color-Crystal-RGB));
+  --Color-Crystal-RGB: 245, 143, 152;
+  --Box-Shadow-Glass: 0 1px 2px -2px rgb(0 0 0 / 16%),
+    0 3px 6px 0 rgb(0 0 0 / 12%), 0 5px 12px 4px rgb(0 0 0 / 9%);
+  --Font-Size-Content-Small: 14px;
+  --Font-Size-Content-Medium: 16px;
+  --Font-Size-Content-Large: 18px;
+  --Font-Size-Title-Small: 20px;
+  --Font-Size-Title-Medium: 22px;
+  --Font-Size-Title-Large: 24px;
+  --Font-Family-Global: Consolas, Crystal, Monaco, 'Andale Mono', 'Ubuntu Mono',
+    monospace, Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+}
+
+.small-screen-style {
+  --Font-Size-Content-Small: 12px;
+  --Font-Size-Content-Medium: 14px;
+  --Font-Size-Content-Large: 16px;
+  --Font-Size-Title-Small: 18px;
+  --Font-Size-Title-Medium: 20px;
+  --Font-Size-Title-Large: 22px;
+}
+
+.small-screen-style #bg {
+  background-position: calc(100% + 100px) calc(100% + 10px);
+}
+
+.small-screen-style .small-screen-hide {
+  display: none !important;
+}
+
+body:not(.small-screen-style) .small-screen-show {
+  display: none !important;
+}

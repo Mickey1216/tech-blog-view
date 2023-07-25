@@ -1,0 +1,39 @@
+.profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .avatar {
+    margin: 20px 0;
+    width: 100px;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    animation: 1s ease-out 0s infinite alternate shine;
+    animation-fill-mode: both;
+  }
+
+  @keyframes shine {
+    from {
+      box-shadow: 0 0 40px 10px var(--Color-Crystal);
+    }
+
+    to {
+      box-shadow: 0 0 40px 20px var(--Color-Crystal);
+    }
+  }
+
+  span {
+    margin-bottom: 10px;
+  }
+
+  .name {
+    font-weight: bolder;
+    font-size: 18px;
+    color: var(--Color-Crystal);
+  }
+
+  .job, .info {
+    font-size: var(--Font-Size-Content-Small);
+    color: var(--Color-Crystal);
+  }
+}

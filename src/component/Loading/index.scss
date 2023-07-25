@@ -1,0 +1,45 @@
+.loading {
+    font-size: var(--Font-Size-Title-Large);
+    position: fixed;
+    z-index: 50;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+    position: none;
+    text-align: center;
+    color: var(--Color-Crystal);
+
+    .sprite {
+        display: inline-block;
+        width: 48px;
+        height: 48px;
+        background-image: url("~@/assets/images/sprite.png");
+        background-position: 0px 0px;
+        animation: sprite-walk .3s steps(5) 0s infinite forwards;
+    }
+
+    @keyframes sprite-walk {
+        to {
+            background-position: -240px 0;
+        }
+    }
+
+    .loading-text {
+        display: inline-block;
+        margin: 0 .2em;
+        animation: .8s ease-out 0s infinite alternate loading-text-animation;
+        animation-fill-mode: both;
+    }
+
+    @keyframes loading-text-animation {
+        from {
+            transform: translateY(.25em);
+            opacity: .5;
+        }
+
+        to {
+            transform: translateY(-.25em);
+            opacity: 1;
+        }
+    }
+}

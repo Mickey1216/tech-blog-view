@@ -1,0 +1,48 @@
+.search-selector {
+    text-align: right;
+    margin-bottom: 10px;
+    user-select: none;
+
+    .ant-checkbox .ant-checkbox-inner:after {
+        inset-inline-start: 0;
+        left: 21.5%;
+    }
+
+    .selector-text {
+        color: var(--Color-Crystal);
+    }
+
+    .ant-space {
+        cursor: pointer;
+    }
+
+    .selector-wrapper {
+        background-color: white;
+        padding: 4px;
+        border-radius: 8px;
+        text-align: left;
+        box-shadow: 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
+
+        .selector-order-item {
+            cursor: pointer;
+            padding: .25em .5em;
+
+            &:hover {
+                background-color: rgba(0, 0, 0, 0.04);
+            }
+        }
+
+        .ant-checkbox-group {
+            flex-direction: column;
+
+            label {
+                margin: 0;
+                padding: .25em .5em;
+
+                &:hover {
+                    background-color: rgba(0, 0, 0, 0.04);
+                }
+            }
+        }
+    }
+}
