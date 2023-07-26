@@ -1,37 +1,37 @@
 import { useEffect } from 'react';
-import './index.scss';
 import {
   CalendarOutlined,
   DeleteOutlined,
   EditOutlined,
   StarOutlined,
-  TagOutlined,
+  TagOutlined
 } from '@ant-design/icons';
 import 'markdown-navbar/dist/navbar.css';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { FloatButton, Image, Skeleton } from 'antd';
-import MyReactMarkdown from '../../component/MyReactMarkdown';
+import './index.scss';
 import {
   useChangePageTitle,
   useGetArticleDetail,
   useOpenMessageThrottle,
-  useShowPromiseModal,
+  useShowPromiseModal
 } from '@/hook';
 import userStore from '@/store/userStore';
 import { deleteArticle, updateUserRecommendList } from '@/request';
 import defaultImage from '@/assets/images/defaultImage.png';
 import Loading from '@/component/Loading';
 import ArticleMarkNav from '@/pages/ArticleDetail/ArticleMarkNav';
+import MyReactMarkdown from '@/component/MyReactMarkdown';
 
 interface Props extends BaseProps {}
 
 function ArticleDetail(props: Props) {
-  //id匹配
+  // id匹配
   const params = useParams();
 
   const openMessage = useOpenMessageThrottle(1000);
   const navigate = useNavigate();
-  //处理数据
+  // 处理数据
   const { articleDetail, updateArticleDetail, error, imageSrc } =
     useGetArticleDetail();
   useEffect(() => {
@@ -40,22 +40,22 @@ function ArticleDetail(props: Props) {
 
   useChangePageTitle(
     articleDetail?.title
-      ? '水晶世界-文章详情-' + articleDetail.title
-      : '水晶世界-文章详情-加载中',
-    [articleDetail?.title],
+      ? 'Mickey技术博客-文章详情-' + articleDetail.title
+      : 'Mickey技术博客-文章详情-加载中',
+    [articleDetail?.title]
   );
 
   useEffect(() => {
     if (error) {
       openMessage({
         content: error,
-        type: 'error',
+        type: 'error'
       });
       navigate('/article');
     }
   }, [error, openMessage, navigate]);
 
-  //文章修改、删除
+  // 文章修改、删除
   const ShowPromiseModal = useShowPromiseModal('confirm');
 
   const articleEditHandle = () => {
@@ -107,6 +107,7 @@ function ArticleDetail(props: Props) {
       });
       return;
     }
+
     ShowPromiseModal({
       title: '添加精选推荐',
       content: '精选推荐将会在首页展示，是否添加',
@@ -114,20 +115,20 @@ function ArticleDetail(props: Props) {
         try {
           const user = await updateUserRecommendList(
             [...recommendIdList, params?.id || ''],
-            userStore.user.id,
+            userStore.user.id
           );
           userStore.login(user);
           openMessage({
             content: '精选推荐添加成功',
-            type: 'success',
+            type: 'success'
           });
         } catch (error) {
           openMessage({
             content: (error as Error).message,
-            type: 'warning',
+            type: 'warning'
           });
         }
-      },
+      }
     });
   };
 
@@ -169,14 +170,14 @@ function ArticleDetail(props: Props) {
         </>
       ) : (
         <>
-          <Loading>请求数据中...</Loading>
+          <Loading>数据请求中...</Loading>
           <Skeleton active title={false} paragraph={{ rows: 1 }} />
           <Skeleton.Avatar
             shape={'square'}
             style={{
               width: '100%',
               height: '0',
-              paddingBottom: `${900 / 16}%`,
+              paddingBottom: `${900 / 16}%`
             }}
             active
           />

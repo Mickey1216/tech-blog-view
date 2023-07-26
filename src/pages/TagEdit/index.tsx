@@ -1,27 +1,29 @@
-import React, { useState } from 'react';
-import './index.scss';
+import { useState } from 'react';
 import { Button, Input, message } from 'antd';
+import './index.scss';
 import {
   useChangePageTitle,
   useGetTagListData,
   useOpenMessageThrottle,
-  useShowPromiseModal,
+  useShowPromiseModal
 } from '@/hook';
 import { addTag, deleteTag, updateTag } from '@/request';
 import MyTag from '@/component/MyTag';
 
 function EditTag() {
-  useChangePageTitle('水晶世界-标签编辑', []);
+  useChangePageTitle('Mickey技术博客-编辑标签', []);
+
   const { tagList, setTagList } = useGetTagListData();
   const [newTag, setNewTag] = useState<Omit<Tag, 'id'>>({
     name: '',
-    color: '#000000',
+    color: '#000000'
   });
+
   const openMessage = useOpenMessageThrottle(1000);
 
   const showPromiseModal = useShowPromiseModal('confirm');
 
-  //↓输入绑定
+  // 输入绑定
   const changeOldTag = (item: Tag, target: keyof Tag, value: string) => {
     setTagList((state) => {
       item[target] = value;
@@ -29,23 +31,24 @@ function EditTag() {
     });
   };
 
+  // 修改标签：标签名称/标签颜色
   const changeNewTag: SetStateFunctionHandler<typeof newTag> = (
     target,
-    value,
+    value
   ) => {
-    setNewTag((state) => {
-      state[target] = value;
-      return { ...state };
+    setNewTag((tag) => {
+      tag[target] = value;
+      return { ...tag };
     });
   };
 
-  //↓提交操作
+  // 修改/删除按钮回调函数
   const submitOldTag = (item: Tag, type: 'Delete' | 'Edit') => {
     switch (type) {
       case 'Delete':
         showPromiseModal({
           title: '删除标签',
-          content: '确认提交操作？',
+          content: '确认删除该标签？',
           onOk(...args) {
             return new Promise(async (resolve, reject) => {
               try {
@@ -62,7 +65,7 @@ function EditTag() {
               }
               resolve('');
             });
-          },
+          }
         });
         return;
       case 'Edit':
@@ -72,23 +75,24 @@ function EditTag() {
         }
         showPromiseModal({
           title: '编辑标签',
-          content: '确认提交操作？',
+          content: '确认编辑该标签？',
           onOk(...args) {
             return new Promise(async (resolve, reject) => {
               try {
                 await updateTag(item);
-                message.success('标签修改成功', 3);
+                message.success('标签编辑成功', 3);
               } catch (error) {
                 message.warning((error as Error).message, 3);
               }
               resolve('');
             });
-          },
+          }
         });
         return;
     }
   };
 
+  // 新增按钮回调函数
   const submitNewTag = () => {
     if (newTag.name.trim() === '') {
       openMessage({ type: 'warning', content: '标签名不能为空' });
@@ -96,7 +100,7 @@ function EditTag() {
     }
     showPromiseModal({
       title: '创建新标签',
-      content: '确认提交操作？',
+      content: '确认创建新标签？',
       onOk(...args) {
         return new Promise(async (resolve, reject) => {
           try {
@@ -105,19 +109,19 @@ function EditTag() {
               return [...state, data];
             });
             setNewTag({ name: '', color: '#000000' });
-            message.success('标签添加成功', 3);
+            message.success('标签创建成功', 3);
           } catch (error) {
             message.warning((error as Error).message, 3);
           }
           resolve('');
         });
-      },
+      }
     });
   };
 
   return (
     <div className='edit-tag'>
-      <h1>标签编辑</h1>
+      <h1>编辑标签</h1>
       <div className='edit-container'>
         {tagList.map((item, index) => {
           return (
@@ -126,7 +130,7 @@ function EditTag() {
                 placeholder='标签名称'
                 size='small'
                 value={item.name}
-                style={{ width: '100px' }}
+                style={{ width: '120px' }}
                 onChange={(e) => {
                   changeOldTag(item, 'name', e.target.value);
                 }}

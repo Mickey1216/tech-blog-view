@@ -10,12 +10,12 @@ import github from "@/assets/images/github.png";
 const menuList = [
   {
     title: "首页",
-    url: "home",
+    url: "home"
   },
   {
     title: "文章",
-    url: "article",
-  },
+    url: "article"
+  }
 ];
 
 let hide = false;

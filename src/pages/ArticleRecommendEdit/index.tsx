@@ -1,28 +1,29 @@
-import React, { useEffect } from 'react';
-import './index.scss';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   DragDropContext,
   Droppable,
   Draggable,
-  DropResult,
+  DropResult
 } from 'react-beautiful-dnd';
 import { DeleteOutlined, UnorderedListOutlined } from '@ant-design/icons';
 import { Alert, Button } from 'antd';
+import './index.scss';
 import {
   useChangePageTitle,
   useGetRecommendArticleList,
   useOpenMessageThrottle,
-  useShowPromiseModal,
+  useShowPromiseModal
 } from '@/hook';
 import userStore from '@/store/userStore';
 import { updateUserRecommendList } from '@/request';
 import { throttle } from '@/tools';
-import { useNavigate } from 'react-router-dom';
+
 
 function EditRecommend() {
-  useChangePageTitle('水晶世界-精选编辑', []);
-  const { articleList, setArticleList, updateRecommendArticleList } =
-    useGetRecommendArticleList();
+  useChangePageTitle('Mickey技术博客-编辑精选', []);
+  
+  const { articleList, setArticleList, updateRecommendArticleList } = useGetRecommendArticleList();
 
   useEffect(() => {
     updateRecommendArticleList(userStore.user.recommendIdList || []);
@@ -30,13 +31,14 @@ function EditRecommend() {
 
   const navigate = useNavigate();
 
-  //拖动结束
+  // 拖动结束
   const onDragEnd = (result: DropResult) => {
     const sourceIndex = result.source.index;
     const destinationIndex = result.destination?.index || 0;
     if (sourceIndex === destinationIndex) {
       return;
     }
+
     setArticleList((state) => {
       const [draggedItem] = state.splice(sourceIndex, 1);
       state.splice(destinationIndex, 0, draggedItem);
@@ -44,13 +46,12 @@ function EditRecommend() {
     });
   };
 
-  //删除
+  // 删除对话框
   const showPromiseModal = useShowPromiseModal('confirm');
-
   const deleteArticle = (article: Article) => {
     showPromiseModal({
       title: '删除精选推荐',
-      content: '确认提交操作？',
+      content: '确认删除？',
       onOk(...args) {
         setArticleList((state) => {
           const nState = state.filter((item) => {
@@ -58,39 +59,40 @@ function EditRecommend() {
           });
           return [...nState];
         });
-      },
+      }
     });
   };
 
-  //提交
+  // 提交成功提示
   const openMessage = useOpenMessageThrottle(1000, {
-    type: 'success',
+    type: 'success'
   });
 
+  // 修改按钮回调函数
   const submit = throttle(async () => {
     showPromiseModal({
       title: '修改精选推荐',
-      content: '确认提交操作？',
+      content: '确认修改？',
       async onOk(...args) {
         const recommendIdList = articleList.map((item) => {
           return item.id;
         });
         const user = await updateUserRecommendList(
           recommendIdList,
-          userStore.user.id,
+          userStore.user.id
         );
         userStore.login(user);
         openMessage({
           content: '精选推荐编辑成功',
         });
         navigate('/article');
-      },
+      }
     });
   }, 1000);
 
   return (
     <div className='article-recommend-edit'>
-      <h1>精选编辑</h1>
+      <h1>编辑精选</h1>
       {userStore.user.recommendIdList?.length ? (
         <DragDropContext onDragEnd={onDragEnd}>
           <div className='my-modal'>
@@ -136,7 +138,7 @@ function EditRecommend() {
                           <UnorderedListOutlined
                             style={{
                               flexBasis: 'var(--Font-Size-Title-Large)',
-                              fontSize: 'var(--Font-Size-Title-Small)',
+                              fontSize: 'var(--Font-Size-Title-Small)'
                             }}
                           />
                           <span style={{ flex: '3' }}>{item.title}</span>
@@ -157,7 +159,7 @@ function EditRecommend() {
                             style={{
                               flexBasis: 'var(--Font-Size-Title-Large)',
                               fontSize: 'var(--Font-Size-Title-Small)',
-                              cursor: 'pointer',
+                              cursor: 'pointer'
                             }}
                             onClick={() => {
                               deleteArticle(item);

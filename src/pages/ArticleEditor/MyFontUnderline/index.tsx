@@ -1,5 +1,4 @@
 import { UnderlineOutlined } from '@ant-design/icons';
-import React from 'react';
 import { PluginProps } from 'react-markdown-editor-lite';
 
 function MyFontUnderline(props: PluginProps) {

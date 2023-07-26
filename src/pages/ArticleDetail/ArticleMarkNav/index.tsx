@@ -1,6 +1,6 @@
 import { MenuOutlined } from '@ant-design/icons';
 import { Dropdown, FloatButton } from 'antd';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import MarkdownNavbar from 'markdown-navbar';
 import './index.scss';
 

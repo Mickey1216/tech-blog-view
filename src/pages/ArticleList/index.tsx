@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
-import './index.scss';
 import { useSearchParams } from 'react-router-dom';
 import { Alert, Pagination, Skeleton } from 'antd';
+import './index.scss';
 import kwStore from '@/store/SearchStore';
 import { useChangePageTitle, useGetSearchArticleData } from '@/hook';
 import ArticleListItem from './ArticleListItem';
@@ -13,9 +13,12 @@ import searchStore from '@/store/SearchStore';
 
 const pageSize = 10;
 
-const getSearchParams = (
-  searchParams: URLSearchParams,
-): SearchArticleParams => {
+/**
+ * 获取搜索参数
+ * @param searchParams 搜索参数
+ * @returns 
+ */
+const getSearchParams = (searchParams: URLSearchParams): SearchArticleParams => {
   const kw = searchParams.get('kw') || '';
 
   let skip = Number(searchParams.get('skip')) || 0;
@@ -43,10 +46,10 @@ const getSearchParams = (
 };
 
 function ArticleList() {
-  //query参数
+  // query参数
   const [searchParams, setSearchParams] = useSearchParams();
 
-  //收集query信息
+  // 收集query信息
   const params = getSearchParams(searchParams);
 
   const {
@@ -56,14 +59,14 @@ function ArticleList() {
     isLoading: articleListIsLoading,
   } = useGetSearchArticleData();
 
-  //获取文章列表
+  // 获取文章列表
   useEffect(() => {
     const nParams = getSearchParams(searchParams);
     nParams.kw && kwStore.setKw(nParams.kw);
     updateSearchArticleData(nParams);
   }, [searchParams, updateSearchArticleData]);
 
-  //处理分页
+  // 处理分页
   const onChangePage = (page: number, pageSize: number) => {
     setSearchParams((state) => {
       return { ...state, ...params, skip: (page - 1) * pageSize };
@@ -71,8 +74,8 @@ function ArticleList() {
   };
 
   useChangePageTitle(
-    params.kw ? `水晶世界-文章列表-${params.kw}` : '水晶世界-文章列表',
-    [params.kw],
+    params.kw ? `Mickey技术博客-文章列表-${params.kw}` : 'Mickey技术博客-文章列表',
+    [params.kw]
   );
 
   return (

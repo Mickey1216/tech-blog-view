@@ -85,3 +85,91 @@ input {
 body:not(.small-screen-style) .small-screen-show {
   display: none !important;
 }
+
+/* 修改antd一些组件的默认样式 */
+.ant-form-item-required::before {
+  content: '' !important;
+}
+
+.ant-input{
+  border-color: var(--Color-Crystal);
+  box-shadow: none;
+}
+.ant-input:hover{
+  border-color: var(--Color-Crystal);
+  box-shadow: none;
+}
+.ant-input.css-dev-only-do-not-override-txh9fw{
+  border-color: var(--Color-Crystal);
+  box-shadow: none;
+}
+
+.ant-btn.ant-btn-default:hover{
+  color: var(--Color-Crystal) !important;
+  border-color: var(--Color-Crystal) !important;
+}
+
+.ant-btn.ant-btn-primary{
+  background-color: var(--Color-Crystal);
+  box-shadow: none;
+}
+.ant-btn.ant-btn-primary:hover{
+  background-color: #f7acbc !important;
+  color: #fff;
+  border-color: #f7acbc;
+}
+
+.ant-btn.ant-btn-default.ant-btn-sm:hover{
+  color: var(--Color-Crystal);
+  border-color: var(--Color-Crystal);
+}
+
+.ant-select-selector{
+  border-color: var(--Color-Crystal) !important;
+  box-shadow: none !important;
+}
+.ant-select-selector:hover{
+  border-color: var(--Color-Crystal) !important;
+  box-shadow: none !important;
+}
+.ant-select.css-dev-only-do-not-override-txh9fw.ant-select-focused.ant-select-single.ant-select-show-arrow{
+  border-color: var(--Color-Crystal) !important;
+  box-shadow: none !important;
+}
+.ant-select.css-dev-only-do-not-override-txh9fw.ant-select-single.ant-select-show-arrow{
+  border-color: var(--Color-Crystal) !important;
+  box-shadow: none !important;
+}
+
+.ant-picker{
+  border-color: var(--Color-Crystal) !important;
+  box-shadow: none !important;
+}
+.ant-picker-cell-inner::before{
+  background-color: var(--Color-Crystal) !important;
+  border-color: var(--Color-Crystal) !important;
+  color: #fff;
+}
+.ant-picker-today-btn{
+  color: var(--Color-Crystal) !important;
+}
+.ant-picker-today-btn:hover{
+  color: #f7acbc !important;
+}
+
+.ant-switch-inner.ant-switch-inner-checked{
+  background-color: var(--Color-Crystal) !important;
+}
+.ant-switch-inner.ant-switch-inner-checked:hover{
+  background-color: #f7acbc !important;
+}
+
+.img-drag:hover{
+  border-color: var(--Color-Crystal) !important;
+}
+
+.ant-alert.ant-alert-info.ant-alert-no-icon{
+  border-color: var(--Color-Crystal);
+  background-color: var(--Color-Crystal);
+  color: #fff;
+}

@@ -1,9 +1,15 @@
-import { Button, DatePicker, Input, Modal, Select, Image, Switch } from 'antd';
-import './index.scss';
 import { useEffect, useRef, useState } from 'react';
-import TextArea from 'antd/es/input/TextArea';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { Button, DatePicker, Input, Modal, Select, Image, Switch } from 'antd';
 import Cropper, { ReactCropperElement } from 'react-cropper'; // 引入Cropper
 import 'cropperjs/dist/cropper.css'; // 引入Cropper对应的css
+import TextArea from 'antd/es/input/TextArea';
+import { UploadOutlined } from '@ant-design/icons';
+import MdEditor, { Plugins } from 'react-markdown-editor-lite';
+import 'react-markdown-editor-lite/lib/index.css';
+import Editor from 'react-markdown-editor-lite';
+import dayjs from 'dayjs';
+import './index.scss';
 import { blobToFile, changeBuffer } from '@/tools';
 import MyReactMarkdown from '@/component/MyReactMarkdown';
 import {
@@ -11,52 +17,44 @@ import {
   useGetArticleDetail,
   useGetTagListData,
   useOpenMessageThrottle,
-  useShowPromiseModal,
+  useShowPromiseModal
 } from '@/hook';
 import { addArticle, updateArticle } from '@/request';
-import { useNavigate, useSearchParams } from 'react-router-dom';
-import dayjs from 'dayjs';
-import { UploadOutlined } from '@ant-design/icons';
 import defaultImage from '@/assets/images/defaultImage.png';
-import MdEditor, { Plugins } from 'react-markdown-editor-lite';
-import 'react-markdown-editor-lite/lib/index.css';
-import Editor from 'react-markdown-editor-lite';
 import MyFontUnderline from './MyFontUnderline';
 import CollapseList from './CollapseList';
 
 const validationForm: { target: keyof ArticleForm; content: string }[] = [
   {
     target: 'title',
-    content: '请输入文章标题',
+    content: '请输入文章标题'
   },
   {
     target: 'tagId',
-    content: '请选择文章标签',
+    content: '请选择文章标签'
   },
   {
     target: 'introduction',
-    content: '请输入文章简介',
+    content: '请输入文章简介'
   },
   {
     target: 'content',
-    content: '请输入文章内容',
+    content: '请输入文章内容'
   },
   {
     target: 'createTime',
-    content: '创建日期为空',
+    content: '创建日期为空'
   },
   {
     target: 'updateTime',
-    content: '修改日期为空',
-  },
+    content: '修改日期为空'
+  }
 ];
 
 Editor.use(Plugins.TabInsert, {
-  tabMapValue: 1,
+  tabMapValue: 1
 });
-
 Editor.use(MyFontUnderline);
-
 Editor.use(CollapseList);
 
 const plugins = [
@@ -83,24 +81,25 @@ const plugins = [
   'logger',
   'mode-toggle',
   'full-screen',
-  'tab-insert',
+  'tab-insert'
 ];
 
 function AddArticle() {
-  //编辑状态初始化
-  const [searchParams] = useSearchParams(); //query参数
-  const { articleDetail, updateArticleDetail, imageSrc } =
-    useGetArticleDetail();
+  // 编辑状态初始化
+  const [searchParams] = useSearchParams(); // query参数
+  const { articleDetail, updateArticleDetail, imageSrc } = useGetArticleDetail();
+
   useEffect(() => {
     const id = searchParams.get('id');
     if (!id) return;
+
     updateArticleDetail(id);
   }, [searchParams, updateArticleDetail]);
 
   useEffect(() => {
     if (!articleDetail) return;
-    const { content, title, introduction, createTime, tag, publicState } =
-      articleDetail;
+
+    const { content, title, introduction, createTime, tag, publicState } = articleDetail;
     setArticleForm((state) => {
       return {
         content,
@@ -109,15 +108,13 @@ function AddArticle() {
         createTime,
         updateTime: dayjs(),
         tagId: tag.id,
-        publicState,
+        publicState
       };
     });
   }, [articleDetail]);
 
-  //表单处理
-  const loadStoreArticleData: ArticleForm | {} = JSON.parse(
-    localStorage.getItem('article') || '{}',
-  );
+  // 表单处理
+  const loadStoreArticleData: ArticleForm | {} = JSON.parse(localStorage.getItem('article') || '{}');
 
   const articleFormDefaultValue = () => {
     if (JSON.stringify(loadStoreArticleData) !== '{}') {
