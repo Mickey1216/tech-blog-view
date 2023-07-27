@@ -2,7 +2,6 @@ import React from 'react';
 import { Input, Space } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { observer } from 'mobx-react';
-import './index.scss';
 import kwStore from '@/store/SearchStore';
 import { useOpenMessageThrottle } from '@/hook';
 
