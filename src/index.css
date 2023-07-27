@@ -117,3 +117,31 @@ body:not(.small-screen-style) .small-screen-show {
   background-color: #f7acbc !important;
 }
 
+.ant-alert.ant-alert-info.ant-alert-no-icon.css-dev-only-do-not-override-1l15uh0{
+  color: #fff;
+  border-color: var(--Color-Crystal) !important;
+  background-color: var(--Color-Crystal) !important;
+}
+
+.ant-input.css-dev-only-do-not-override-txh9fw:hover{
+  border-color: var(--Color-Crystal) !important;
+}
+.ant-input.css-dev-only-do-not-override-txh9fw{
+  border-color: var(--Color-Crystal) !important;
+  box-shadow: none;
+}
+.ant-input-affix-wrapper.ant-input-password.css-dev-only-do-not-override-txh9fw{
+  border-color: var(--Color-Crystal) !important;
+  box-shadow: none;
+}
+
+.ant-btn.css-dev-only-do-not-override-txh9fw.ant-btn-primary{
+  box-shadow: none;
+}
+
+.anticon.anticon-menu{
+  color: var(--Color-Crystal) !important;
+}
+.anticon.anticon-menu:hover{
+  color: #f7acbc !important;
+}
