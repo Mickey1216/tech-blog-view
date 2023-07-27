@@ -1,9 +1,9 @@
 import { Link, useNavigate } from 'react-router-dom';
-import './index.scss';
 import { Image } from 'antd';
+import { LockOutlined } from '@ant-design/icons';
+import './index.scss';
 import defaultImage from '@/assets/images/defaultImage.png';
 import MyTag from '../MyTag';
-import { LockOutlined } from '@ant-design/icons';
 import { useRequestImage } from '@/hook';
 
 interface Props extends BaseProps {
@@ -13,9 +13,7 @@ interface Props extends BaseProps {
 
 function MyCard(props: Props) {
   const { article, shadow, className, style } = props;
-
   const imageSrc = useRequestImage(article);
-
   const navigate = useNavigate();
 
   return (
@@ -40,7 +38,7 @@ function MyCard(props: Props) {
                 navigate(
                   `/article?kw=${article.tag.name}&orderType=tagName&filterType=0,0,0,1`,
                 );
-              },
+              }
             }}
           >
             {article.tag.name}

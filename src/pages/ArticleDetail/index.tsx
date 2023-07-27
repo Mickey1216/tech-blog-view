@@ -94,7 +94,7 @@ function ArticleDetail(props: Props) {
         } finally {
           navigate('/article');
         }
-      },
+      }
     });
   };
 
@@ -103,7 +103,7 @@ function ArticleDetail(props: Props) {
     if (recommendIdList.includes(params?.id || '')) {
       openMessage({
         content: '已经是精选推荐了',
-        type: 'warning',
+        type: 'warning'
       });
       return;
     }

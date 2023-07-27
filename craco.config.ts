@@ -25,16 +25,16 @@ const config = {
             priority: 0, // 优先级
             minSize: 0, // 公共模块的大小限制
             minChunks: 2, // 公共模块最少复用过几次，引用两次及以上，把公共模块拆分
-            maxInitialRequests: 4, // 入口的最大并行请求数
-          },
-        },
-      },
+            maxInitialRequests: 4 // 入口的最大并行请求数
+          }
+        }
+      }
     },
     configure: (webpackConfig: any) => {
       if (webpackConfig.mode === 'production') webpackConfig.devtool = false;
       return webpackConfig;
-    },
-  },
+    }
+  }
 };
 
 export default config;

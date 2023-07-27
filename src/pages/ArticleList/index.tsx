@@ -41,7 +41,7 @@ const getSearchParams = (searchParams: URLSearchParams): SearchArticleParams => 
     take,
     order,
     orderType,
-    filterType,
+    filterType
   };
 };
 

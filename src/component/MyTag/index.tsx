@@ -1,6 +1,6 @@
 import { Tag, TagProps } from 'antd';
-import React from 'react';
 import './index.scss';
+
 interface Props extends BaseProps {
   color: string;
   tagProps?: TagProps;

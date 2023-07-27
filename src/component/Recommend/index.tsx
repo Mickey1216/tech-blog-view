@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { Carousel, Skeleton } from 'antd';
 import './index.scss';
 import MyCard from '../MyCard';

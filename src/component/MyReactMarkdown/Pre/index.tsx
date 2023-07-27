@@ -1,6 +1,6 @@
-import CodeCopyBtn from '@/component/MyReactMarkdown/Code/CodeCopyBtn';
 import React from 'react';
 import { ReactMarkdownProps } from 'react-markdown/lib/complex-types';
+import CodeCopyBtn from '@/component/MyReactMarkdown/Code/CodeCopyBtn';
 
 type PreProps = Pick<
   React.DetailedHTMLProps<React.HTMLAttributes<HTMLPreElement>, HTMLPreElement>,

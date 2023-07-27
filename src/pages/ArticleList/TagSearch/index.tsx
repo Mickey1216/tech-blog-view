@@ -1,8 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
-import './index.scss';
-import { Button, Skeleton } from 'antd';
-import { useGetTagListData } from '@/hook';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Button, Skeleton } from 'antd';
+import './index.scss';
+import { useGetTagListData } from '@/hook';
 import MyTag from '@/component/MyTag';
 import { debounce } from '@/tools';
 
@@ -10,20 +10,22 @@ function TagSearch() {
   const { tagList, isLoading } = useGetTagListData();
   const tagWrapperRef = useRef<HTMLDivElement>(null);
   const [tagLinkHeight, setTagLinkHeight] = useState(0);
-
   const [viewMore, setViewMore] = useState(false);
   const [viewMoreBtn, setViewMoreBtn] = useState(false);
 
   useEffect(() => {
     const tagLink = document.querySelector<HTMLAnchorElement>(
-      '.tag-wrapper .tag-link',
+      '.tag-wrapper .tag-link'
     );
+
     if (tagLink) {
       setTagLinkHeight(tagLink.scrollHeight);
     }
+
     const tagWrapper = tagWrapperRef.current;
     const resizeObserverHandle: ResizeObserverCallback = (entries) => {
       if (!tagWrapper) return;
+
       const tagWrapperHeight = entries[0].contentRect.height;
       const tagWrapperScrollHeight = tagWrapper.scrollHeight;
       if (
@@ -36,10 +38,12 @@ function TagSearch() {
         setViewMoreBtn(false);
       }
     };
+
     const myObserver = new ResizeObserver(debounce(resizeObserverHandle, 500));
     if (tagWrapper && !viewMore) {
       myObserver.observe(tagWrapper);
     }
+    
     return () => {
       if (tagWrapper) {
         myObserver.unobserve(tagWrapper);

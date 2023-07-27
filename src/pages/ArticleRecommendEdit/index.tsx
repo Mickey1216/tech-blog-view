@@ -6,8 +6,8 @@ import {
   Draggable,
   DropResult
 } from 'react-beautiful-dnd';
-import { DeleteOutlined, UnorderedListOutlined } from '@ant-design/icons';
 import { Alert, Button } from 'antd';
+import { DeleteOutlined, UnorderedListOutlined } from '@ant-design/icons';
 import './index.scss';
 import {
   useChangePageTitle,

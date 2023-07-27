@@ -1,8 +1,7 @@
-import React from 'react';
-import './index.scss';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
+import './index.scss';
 import Pre from './Pre';
 import Code from './Code';
 import Li from './Li';
@@ -22,7 +21,7 @@ function MyReactMarkdown(props: Props) {
         components={{
           pre: Pre,
           code: Code,
-          li: Li,
+          li: Li
         }}
       >
         {props.markdown}

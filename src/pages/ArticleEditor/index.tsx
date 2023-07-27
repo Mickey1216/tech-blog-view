@@ -116,6 +116,7 @@ function AddArticle() {
   // 表单处理
   const loadStoreArticleData: ArticleForm | {} = JSON.parse(localStorage.getItem('article') || '{}');
 
+  // 文章表单默认值
   const articleFormDefaultValue = () => {
     if (JSON.stringify(loadStoreArticleData) !== '{}') {
       const data = loadStoreArticleData as ArticleForm;
@@ -123,6 +124,7 @@ function AddArticle() {
       data.updateTime = dayjs();
       return data;
     }
+
     return {
       title: '',
       content: '',
@@ -130,17 +132,16 @@ function AddArticle() {
       tagId: '0',
       publicState: true,
       createTime: dayjs(),
-      updateTime: dayjs(),
+      updateTime: dayjs()
     };
   };
 
-  const [articleForm, setArticleForm] = useState<ArticleForm>(
-    articleFormDefaultValue(),
-  );
+  const [articleForm, setArticleForm] = useState<ArticleForm>(articleFormDefaultValue());
 
+  // 修改文章表单
   const changeArticleForm: SetStateFunctionHandler<typeof articleForm> = (
     target,
-    value,
+    value
   ) => {
     setArticleForm((state) => {
       state[target] = value;
@@ -148,7 +149,7 @@ function AddArticle() {
     });
   };
 
-  //标签处理
+  // 标签处理
   const { tagList } = useGetTagListData();
 
   const [selectOptions, setSelectOptions] = useState([
@@ -157,11 +158,13 @@ function AddArticle() {
 
   useEffect(() => {
     if (!tagList.length) return;
+
     setSelectOptions((state) => {
       return tagList.map((item, index) => {
         return { value: item.id, label: item.name };
       });
     });
+
     setArticleForm((state) => {
       if (state.tagId === '0') {
         state.tagId = tagList[0].id;
@@ -177,6 +180,7 @@ function AddArticle() {
     });
   }, [articleDetail]);
 
+  // 标签下拉框选项改变回调函数
   const handleSelectChange = (value: string) => {
     setArticleForm((state) => {
       state.tagId = value;
@@ -184,7 +188,7 @@ function AddArticle() {
     });
   };
 
-  //图片上传处理
+  // 图片上传处理
   const imageFileInput = useRef<HTMLInputElement>(null);
   const [file, setFile] = useState<File | null>();
   const [originFile, setOriginFile] = useState<File | null>();
@@ -192,20 +196,25 @@ function AddArticle() {
   const rate = 20;
   const maxSize = mbSize * rate;
 
+  // 封面图片回调函数
   const FileChangeHandle = () => {
     if (!imageFileInput.current) return;
+
     const files = imageFileInput.current.files;
     if (!files || files.length === 0) return;
+
     const temp = files[0];
     imageFileInput.current.value = '';
     if (!/(PNG|JPG|JPEG)/i.test(temp.type))
       return openMessage({ content: '格式错误，请选择png、jpg、jpeg文件' });
     if (temp.size > maxSize)
       return openMessage({ content: `超出大小，请选择小于${rate}MB的图片` });
+
     setOriginFile(temp);
     setIsModalOpen(true);
   };
 
+  // 图片拖拽处理回调函数
   const imgDropHandle = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     if (!imageFileInput.current) return;
@@ -213,48 +222,52 @@ function AddArticle() {
     FileChangeHandle();
   };
 
-  //图片剪切模态框
+  // 图片剪切模态框
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  // ok回调函数
   const handleOk = () => {
     const cropper: Cropper = Reflect.get(cropperRef.current!, 'cropper');
     cropper.getCroppedCanvas().toBlob((res) => {
       if (!res) return;
-      const newFile = blobToFile(res, originFile?.name);
 
+      const newFile = blobToFile(res, originFile?.name);
       setFile(newFile);
       setIsModalOpen(false);
     });
   };
 
+  // cancel回调函数
   const handleCancel = () => {
     setIsModalOpen(false);
   };
 
-  //消息框
+  // 消息框
   const openMessage = useOpenMessageThrottle(1000, { type: 'warning' });
 
-  //裁剪处理
+  // 裁剪处理
   const cropperRef = useRef<HTMLImageElement | ReactCropperElement>(null);
 
+  // 裁剪图片地址
   const cropperSrc = () => {
     if (originFile) return URL.createObjectURL(originFile);
     return '';
   };
 
-  //文章新增、编辑、保存
   const navigate = useNavigate();
   const showPromiseModal = useShowPromiseModal('confirm');
 
+  // 发布文章按钮回调函数
   const submit = async () => {
     showPromiseModal({
       title: '发布文章',
-      content: '确认提交操作？',
+      content: '确认发布文章？',
       async onOk(...args) {
         if (mode === '发布文章' && !file) {
           openMessage({ content: '请选择文章封面图片' });
           return;
         }
+
         const validate = validationForm.every((rule) => {
           if (!articleForm[rule.target]) {
             openMessage({ content: rule.content });
@@ -262,14 +275,17 @@ function AddArticle() {
           }
           return true;
         });
+
         if (!validate) return;
+
         const { createTime, updateTime } = articleForm;
         const nArticle = {
           ...articleForm,
           createTime: createTime.toString(),
           updateTime: updateTime.toString(),
-          id: articleDetail?.id,
+          id: articleDetail?.id
         };
+
         try {
           const fd = new FormData();
           fd.append('article', JSON.stringify(nArticle));
@@ -277,6 +293,7 @@ function AddArticle() {
             const { filename } = await changeBuffer(file);
             fd.append('file', new File([file], filename, { type: file.type }));
           }
+
           let res;
           if (mode === '发布文章') {
             res = await addArticle(fd);
@@ -284,28 +301,30 @@ function AddArticle() {
           } else {
             res = await updateArticle(fd);
           }
+
           openMessage({ content: mode + '成功', type: 'success' });
           navigate('/article/' + res.id);
         } catch (error) {
           openMessage({ content: (error as Error).message, type: 'warning' });
         }
-      },
+      }
     });
   };
 
+  // 保存文章按钮回调函数
   const save = () => {
     showPromiseModal({
       title: '保存文章至本地',
-      content: '确认操作？',
+      content: '确认保存？',
       onOk(...args) {
         localStorage.setItem('article', JSON.stringify(articleForm));
         openMessage({ content: '文章保存成功', type: 'success' });
-      },
+      }
     });
   };
 
   const mode = articleDetail ? '修改文章' : '发布文章';
-  useChangePageTitle('水晶世界-' + mode, [mode]);
+  useChangePageTitle('Mickey技术博客-' + mode, [mode]);
   return (
     <div className='article-editor' id='article-editor'>
       <h1>{mode}</h1>
@@ -441,7 +460,7 @@ function AddArticle() {
             style={{
               height: 100,
               marginTop: 10,
-              overflow: 'hidden',
+              overflow: 'hidden'
             }}
           ></div>
         </Modal>

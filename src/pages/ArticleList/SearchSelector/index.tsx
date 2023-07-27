@@ -1,10 +1,10 @@
-import { FilterOutlined, SortAscendingOutlined } from '@ant-design/icons';
-import { Checkbox, Dropdown, Space } from 'antd';
-import React, { useState } from 'react';
-import './index.scss';
+import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import searchStore from '@/store/SearchStore';
+import { Checkbox, Dropdown, Space } from 'antd';
 import { CheckboxValueType } from 'antd/es/checkbox/Group';
+import { FilterOutlined, SortAscendingOutlined } from '@ant-design/icons';
+import './index.scss';
+import searchStore from '@/store/SearchStore';
 
 type OrderTypeItem = {
   value: SearchArticleParams['orderType'];
@@ -14,26 +14,26 @@ type OrderTypeItem = {
 const orderTypeItems: OrderTypeItem[] = [
   {
     value: 'createTime',
-    text: '创建时间',
+    text: '创建时间'
   },
   {
     value: 'updateTime',
-    text: '更新时间',
+    text: '更新时间'
   },
   {
     value: 'tagName',
-    text: '标签名',
-  },
+    text: '标签名'
+  }
 ];
 
 const filterTypeOptions = [
   { label: '文章标题', value: 'title' },
   { label: '文章简介', value: 'introduction' },
   { label: '文章内容', value: 'content' },
-  { label: '文章标签', value: 'tagName' },
+  { label: '文章标签', value: 'tagName' }
 ];
 
-//获取过滤器的值
+// 获取过滤器的值
 const getFilterValue = (params: SearchArticleParams) => {
   const filterValue = params.filterType
     ?.split(',')
@@ -42,6 +42,7 @@ const getFilterValue = (params: SearchArticleParams) => {
       return null;
     })
     .filter((item) => item) as unknown as CheckboxValueType[];
+
   return filterValue;
 };
 
@@ -50,25 +51,23 @@ interface Props extends BaseProps {
 }
 
 function SearchSelector(props: Props) {
-  //query参数
+  // query参数
   const [, setSearchParams] = useSearchParams();
-
   const { params } = props;
-
   const [openOrder, setOpenOrder] = useState(false);
-
   const [openFilter, setOpenFilter] = useState(false);
 
-  //排序中文名
+  // 排序中文名
   const orderTypeText =
     orderTypeItems.find((item) => {
       return item.value === params.orderType;
     })?.text || '创建时间';
 
-  //修改排序方式
+  // 修改排序方式
   const selectorOrderItemOnClickHandler = (item: OrderTypeItem) => {
     setOpenOrder(false);
     if (item.value === params.orderType) return;
+    
     const orderType = item.value || 'createTime';
     localStorage.setItem('orderType', orderType);
     searchStore.init();
@@ -77,7 +76,7 @@ function SearchSelector(props: Props) {
     });
   };
 
-  //过滤器初始值
+  // 过滤器初始值
   const [filterValue, setFilterValue] = useState(getFilterValue(params));
 
   const filterValueOnChange = (checkedValue: CheckboxValueType[]) => {
@@ -85,15 +84,17 @@ function SearchSelector(props: Props) {
     setFilterValue(checkedValue);
   };
 
-  //修改搜索范围
+  // 修改搜索范围
   const selectorFilterOnclickHandler = () => {
     if (!openFilter) return setOpenFilter(!openFilter);
+
     const filterType = filterTypeOptions
       .map((item) => {
         return filterValue.includes(item.value) ? '1' : '0';
       })
       .join(',');
     if (filterType === params.filterType) return;
+
     localStorage.setItem('filterType', filterType);
     searchStore.init();
     setSearchParams((state) => {

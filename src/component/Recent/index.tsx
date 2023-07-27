@@ -1,22 +1,22 @@
 import { useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import './index.scss';
 import MyCard from '@/component/MyCard';
-import { Link } from 'react-router-dom';
 import { useGetSearchArticleData } from '@/hook';
 import { debounce } from '@/tools';
 
 function Recent() {
-  //数据初始化
+  // 数据初始化
   const {
     searchArticleData: { articleList },
-    updateSearchArticleData,
+    updateSearchArticleData
   } = useGetSearchArticleData();
 
   useEffect(() => {
     updateSearchArticleData({ take: 12 });
   }, [updateSearchArticleData]);
 
-  //宽度监听
+  // 宽度监听
   const recentDivRef = useRef<HTMLDivElement>(null);
   const [listShow, setListShow] = useState(false);
   const [cardListStyle, setCardListStyle] = useState<React.CSSProperties>({});
@@ -24,7 +24,7 @@ function Recent() {
   useEffect(() => {
     const recentDiv = recentDivRef.current;
     const resizeObserverHandle: ResizeObserverCallback = (entries) => {
-      //盒子宽度
+      // 盒子宽度
       const recentDivWidth = entries[0].contentRect.width;
       let repeatCount = ~~((recentDivWidth - 300) / 300) + 1;
 
@@ -32,9 +32,11 @@ function Recent() {
       if (!listShow) return setListShow(true);
     };
     const myObserver = new ResizeObserver(debounce(resizeObserverHandle, 500));
+
     if (recentDiv) {
       myObserver.observe(recentDiv);
     }
+    
     return () => {
       if (recentDiv) {
         myObserver.unobserve(recentDiv);
@@ -59,7 +61,7 @@ function Recent() {
                   article={item}
                   className='card-item animate__animated animate__zoomIn'
                   style={{
-                    animationDelay: `${index * 0.1}s`,
+                    animationDelay: `${index * 0.1}s`
                   }}
                   key={index}
                   shadow

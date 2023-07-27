@@ -1,8 +1,8 @@
 import { CopyOutlined, LoadingOutlined } from '@ant-design/icons';
-import React, { useEffect, useState } from 'react';
-import './index.scss';
-import copy from 'copy-to-clipboard';
 import { Button } from 'antd';
+import { useEffect, useState } from 'react';
+import copy from 'copy-to-clipboard';
+import './index.scss';
 
 interface Props extends BaseProps {
   language: string;
@@ -11,6 +11,7 @@ interface Props extends BaseProps {
 export default function CodeCopyBtn({ children, language }: Props) {
   const [copyOk, setCopyOk] = useState(false);
 
+  // CopyOutlined图标按钮回调函数
   const handleClick = async () => {
     const text = children[0].props.children[0];
     if (window.isSecureContext) {

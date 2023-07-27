@@ -1,5 +1,5 @@
-import './index.scss';
 import ReactDOM from 'react-dom';
+import './index.scss';
 
 interface Props extends BaseProps {
   children: string;
@@ -22,7 +22,7 @@ function Loading(props: Props) {
         );
       })}
     </div>,
-    document.querySelector('#root')!,
+    document.querySelector('#root')!
   );
 }
 

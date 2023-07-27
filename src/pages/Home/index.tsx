@@ -1,14 +1,14 @@
 import { useEffect, useRef } from 'react';
+// GSAP（GreenSock Animation Platform）是一个功能强大且高性能的JavaScript动画库，用于在Web上创建各种动画效果
+import gsap from 'gsap';
+import ScrollTrigger from 'gsap/ScrollTrigger';
+import $ from 'jquery';
 import './index.scss';
 import Recommend from '@/component/Recommend';
 import Recent from '@/component/Recent';
 import Profile from '@/component/Profile';
 import { useChangePageTitle } from '@/hook';
 import { debounce } from '@/tools';
-// GSAP（GreenSock Animation Platform）是一个功能强大且高性能的JavaScript动画库，用于在Web上创建各种动画效果
-import gsap from 'gsap';
-import ScrollTrigger from 'gsap/ScrollTrigger';
-import $ from 'jquery';
 
 gsap.registerPlugin(ScrollTrigger);
 
